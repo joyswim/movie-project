@@ -1,10 +1,25 @@
 import axios from 'axios'
 import { defineStore } from 'pinia'
 
+export interface RequestBody {
+  id: string
+  title: string
+  page: string
+  plot: string
+}
+
+export type Movies = Movie[]
+export interface Movie {
+  Title: string
+  Year: string
+  imdbID: string
+  Type?: string
+  Poster: string
+}
 interface searchMoviesPayload {
   title: string,
   year?: string,
-  page?: number
+  page?: string
 }
 interface detailMoviePayload {
   id: string,
@@ -13,20 +28,40 @@ interface detailMoviePayload {
 
 export const useMoviesStore = defineStore('movies', {
   state: () => ({
-    movies: []
+    movies: [] as Movies,
+    detailMovie: {} as Movie,
+    page: 1
   }),
-  getters: {
-
-  },
+  getters: {},
   actions: {
-    async searchMovies({ title, year = '', page = 1 }: searchMoviesPayload) {
-      const path = `&s=${title}${year ? `&y=${year}` : ''}${(page >= 1 && page <= 100) ? `&page=${page}` : '&page=1'}`
-      console.log(path)
-      await axios.post(path)
+    async fetchMovies({ title, year, page = '1' }: searchMoviesPayload) {
+      try {
+        const { data } = await axios('/api/movies', {
+          params: {
+            title,
+            page,
+            year
+          }
+        })
+
+        const { Search } = data
+        this.movies = Search
+      } catch(e) {
+        console.error('Error: fetchMovies')
+      }
     },
-    async getDetailMovie({ id, plot }: detailMoviePayload) {
-      const path = `&i=${id}&plot=${plot ? 'short' : 'full'}`
-      await axios.post(path)
+    async fetchMovieDetail({ id, plot = 'short' }: detailMoviePayload) {
+      try {
+        const { data } = await axios('/api/movies', {
+          params: {
+            id,
+            plot
+          }
+        })
+        this.detailMovie = data
+      } catch(e) {
+        console.error('Error: fetchMovieDetail')
+      }
     }
   }
 })
