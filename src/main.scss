@@ -1,0 +1,32 @@
+@mixin font {
+  font-size: 16px;
+  font-weight: 300;
+  font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+}
+
+body {
+  --border-color: #DDD;
+  color: #333;
+  @include font;
+}
+.app__inner {
+  display: flex;
+  height: 100vh;
+  box-sizing: border-box;
+  flex-direction: column;
+  .app__header {
+    height: 50px;
+    display: flex;
+    align-items: stretch;
+    background-color: #333;
+    flex-shrink: 0;
+  }
+  .app__container {
+    flex-grow: 1;
+    margin: 50px 30px 20px 30px;
+  }
+  .app__footer {
+    height: 80px;
+    flex-shrink: 0;
+  }
+}
