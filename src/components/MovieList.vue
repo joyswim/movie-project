@@ -14,7 +14,7 @@ const moviesStore = useMoviesStore()
           v-for="movie in moviesStore.movies"
           :key="movie.imdbID">
           {{ console.log(movie) }}
-          {{ movie.title }}
+          {{ movie.Title }}
           {{ movie.Year }}
           {{ movie.Poster }}
         </li>
