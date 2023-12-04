@@ -1,13 +1,22 @@
 <script setup lang="ts">
-import MovieItem from '~/components/MovieItem.vue'
+// import MovieItem from '~/components/MovieItem.vue'
+import { useMoviesStore } from '~/store/movie'
+
+const moviesStore = useMoviesStore()
+
 </script>
 
 <template>
   <div class="container">
     <div class="movielist">
       <ul>
-        <li>
-          <MovieItem />
+        <li 
+          v-for="movie in moviesStore.movies"
+          :key="movie.imdbID">
+          {{ console.log(movie) }}
+          {{ movie.Title }}
+          {{ movie.Year }}
+          {{ movie.Poster }}
         </li>
       </ul>
     </div>

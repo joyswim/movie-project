@@ -10,7 +10,7 @@ async function searchMovies(event: MouseEvent | KeyboardEvent) {
   if (event instanceof KeyboardEvent && event.isComposing) return
   if (!title.value.trim()) return
   try {
-    await moviesStore.searchMovies({
+    await moviesStore.fetchMovies({
       title: title.value
     })
   } catch(e) {
